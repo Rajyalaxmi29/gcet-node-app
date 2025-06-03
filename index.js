@@ -1,12 +1,18 @@
 import express from "express";
+import mongoose from "mongoose";  
 import cors from "cors";
 
 const app = express();
 app.use(cors());
 
-app.listen(8080, () => console.log("hi"));
+app.listen(8080, () => {
+  mongoose
+    .connect("mongodb://localhost:27017/gcet");
+  console.log("hi");
 
-app.get("/", (req, res) => res.send("Hello World"));
+});
+
+app.get("/greet", (req, res) => res.send("Hello World"));
 app.get("/weather", (req, res) => res.send("31degrees"));
 
 app.get("/products", (req, res) => {
