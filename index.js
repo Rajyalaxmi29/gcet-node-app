@@ -17,7 +17,13 @@ const userSchema = new mongoose.Schema({
   password: {type:String},
   
 });
-const user = mongoose.model("User",userSchema);
+const productSchema = new mongoose.Schema({
+  name: {type:String},
+  price: {type:Number}
+  
+});
+//const user = mongoose.model("User",userSchema);
+const product = mongoose.model("product",productSchema);
 
 app.get("/", async(req, res) => res.send("good morning"));
 
@@ -42,11 +48,12 @@ app.post("/login", async (req, res) => {
 });
 
 app.post("/products", async (req, res) => {
-  const {name,price} = req.body;
+  const products=await product.find();
+  return res.json(products);
 
-  const result = await user.insertOne({ name:name,price:price});
-  return res.json(result);
+  
 });
+
 
 
 app.get("/greet", (req, res) => res.send("Hello World"));
