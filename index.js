@@ -1,22 +1,4 @@
-const express = require('express');
-const cors = require('cors');
-const app = express();
-
-// Allow CORS from your frontend domain
-app.use(cors({
-  origin: 'https://gcet-react-bm6lwg64b-rajyalaxmis-projects-2681107e.vercel.app'
-}));
-
-// OR to allow from all origins (not recommended for production)
-app.use(cors());
-
-// other routes
-app.get('/products', (req, res) => {
-  res.json([...]);
-});
-
-
-/*import express from "express";
+import express from "express";
 import cors from "cors";
 
 const app = express();
