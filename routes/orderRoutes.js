@@ -1,3 +1,4 @@
+// routes/orderRouter.js
 import express from 'express';
 import orderModel from "../models/orderModel.js";
 
@@ -5,13 +6,13 @@ const orderRouter = express.Router();
 
 orderRouter.post("/new", async (req, res) => {
     try {
-        const { email, orderValue } = req.body;
+        const { email, orderValue, items } = req.body;
 
-        if (!email || orderValue === undefined) {
-            return res.status(400).json({ error: "Email and orderValue are required" });
+        if (!email || orderValue === undefined || !Array.isArray(items)) {
+            return res.status(400).json({ error: "Email, orderValue, and items are required" });
         }
 
-        const result = await orderModel.create({ email, orderValue });
+        const result = await orderModel.create({ email, orderValue, items });
 
         return res.status(201).json(result);
     } catch (error) {
