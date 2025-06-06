@@ -1,5 +1,7 @@
 import express from 'express';
 import userModel from "../models/userModel.js";
+import bcrypt from 'bcryptjs';
+
 
 const userRouter = express.Router();
 
@@ -7,14 +9,15 @@ const userRouter = express.Router();
 userRouter.post("/register", async (req, res) => {
   try {
     const { name, email, pass } = req.body;
-
+   
+    const hashedPassword = await bcrypt.hash(pass, 10);
     // Optional: check if user already exists
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    const newUser = new userModel({ name, email, pass });
+    const newUser = new userModel({ name, email, pass: hashedPassword });
     await newUser.save();
 
     res.status(201).json({ message: "User registered successfully" });
